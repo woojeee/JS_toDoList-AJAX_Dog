@@ -1,0 +1,91 @@
+<head>
+  <script
+    src="http://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"
+  ></script>
+  <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="toDoList.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">
+      오늘의 할 일
+      <span>
+        <i id="plus" class="fas fa-plus"></i>
+        <i id="delete_all" class="far fa-trash-alt icon"></i>
+      </span>
+    </div>
+    <input type="text" id="input" />
+
+    <div class="list">
+      <div>
+        - 멋쟁이사자처럼 교안 짜기
+        <span>
+          <i class="far fa-trash-alt icon"></i>
+        </span>
+      </div>
+      <div>
+        - 기억심리학 과제하기
+        <span>
+          <i class="far fa-trash-alt icon"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    //css와 같은 방법으로 selector 잡을 수 있다. 그리고 queryselectorall과 같은 느낌이 될듯.
+    // 모두 queryselectorall 이다. -> $(this)의 중요성
+
+    $(document).on("click", "#plus", function(e) {
+      $("#input").fadeToggle();
+      e.stopPropagation();
+    });
+
+    $(document).on("click", ".list .icon", function(e) {
+      $(this)
+        .closest("div")
+        .fadeOut(500);
+      e.stopPropagation();
+    });
+
+    //토글클래스 쓸때는 . 안찍고 class네임 그냥 쓴다.
+    $(document).on("click", ".list div", function(e) {
+      $(this).toggleClass("list complete");
+      e.stopPropagation();
+    });
+
+    $(document).on("click", "#delete_all", function(e) {
+      $(".list .complete").fadeOut(500);
+      e.stopPropagation();
+    });
+
+    $("#input").keyup(function(event) {
+      if (event.keyCode === 13) {
+        $(".list").append(
+          "<div>- " +
+            $(this).val() +
+            '<span><i class="far fa-trash-alt icon"></i></span></div>'
+        );
+        $(this).val("");
+      }
+    });
+
+    // + 버튼 클릭 시, input fade 토글
+
+    // trash icon 클릭 시, 500ms 간 fadeOut 후 사라짐
+
+    // 작성된 리스트 누르면 .complete라는 클래스 토글
+
+    // 입력 후 엔터 입력 시, 새로운 리스트 생성
+
+    // 상단의 trash 버튼 클릭 시, 완료된 리스트 모두 삭제
+  </script>
+</body>

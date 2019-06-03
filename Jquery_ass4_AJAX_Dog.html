@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script
+      src="http://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <title>마블리의 AJAX</title>
+  </head>
+  <body>
+    <button id="start">마블리의 강아지♥</button>
+    <div class="imgWrapper"></div>
+
+    <script>
+      $("#start").click(function() {
+        //원래 있던 사진 삭제
+        $(".imgWrapper").empty();
+        $.ajax({
+          type: "GET",
+          url: "https://dog.ceo/api/breeds/image/random",
+          //api가 json파일, 그 안에 데이터가 뭔지 변수 확인.
+          dataType: "json",
+
+          //data는 url에서 받아온 정보. 여기서는 json 형식. 정보의 message 사용
+          success: function(data) {
+            //imgWrapper에 코드 추가하여 이미지 삽입.
+            $(".imgWrapper").append("<img src=" + data.message + ">");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
